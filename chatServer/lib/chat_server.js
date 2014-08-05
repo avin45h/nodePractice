@@ -10,24 +10,17 @@ exports.listen = function(server) {
     io.set('log level',1);
 
     io.sockets.on('connetion', function(socket){
-        guestNumber = assignGuestName(socket,guestNumber,nickNames,namesUsed);
+        guestNumber = assignGuestName(socket,guestNumber, nickNames,namesUsed);
         joinRoom(socket,'Lobby');
-
-        handleMessageBroadcasting(socket,nickNames);
+	handleMessageBroadcasting(socket,nickNames);
         handleNameChangeAttempts(socket,nickNames,namesUsed);
         handleRoomJoining(socket);
-    
         socket.on('rooms',function() {
-            socket.emit('rooms',io.socket.manager.rooms);
-        });
-        
+            socket.emit('rooms',io.sockets.manager.rooms);
+        });        
         handleClientDisconnection(socket, nickNames, namesUsed);
-    });
-
-
-    
+    });    
 }
-
 
 function assignGuestName(socket,guestNumber,nickNames,namesUsed){
     var name = 'Guest'+guestNumber;
@@ -39,7 +32,6 @@ function assignGuestName(socket,guestNumber,nickNames,namesUsed){
     namesUsed.push(name);
     return guestNumber + 1;
 }
-
 
 function joinRoom(socket,room){
     socket.join(room);

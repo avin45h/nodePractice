@@ -2,12 +2,12 @@ function divEscapedContentElement(message){
     return $('<div></div>').text(message);
 }
 
-function divSystemElement(messaage){
+function divSystemContentElement(message){
     return $('<div></div>').html('<i>' + message + '</i>');
 }
 
 
-function processUserInput(chaApp, socket) {
+function processUserInput(chatApp, socket) {
     var message = $('#send-message').val();
     var systemMessage;
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
         } else {
             message = result.message;
         }
-        $('#messages').appendDiV(divSystemContentElement(message));
+        $('#messages').append(divSystemContentElement(message));
     });
 
     socket.on('joinResult',function(result){
